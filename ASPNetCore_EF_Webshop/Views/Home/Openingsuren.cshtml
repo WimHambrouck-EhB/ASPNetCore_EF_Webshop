@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Openingsuren";
+    bool open = ViewBag.Open ?? false; // als ViewBag.Open == null, gaan we er van uit dat de winkel gesloten is
+}
+
+<div class="row">
+    <div class="col-lg-8">
+        <h2>@ViewData["Title"]</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, et temporibus, facere perferendis veniam beatae non debitis, numquam blanditiis necessitatibus vel mollitia dolorum laudantium, voluptate dolores iure maxime ducimus fugit.</p>
+    </div>
+    <div class="col-lg-4">
+        <div class="card @(open ? "border-success" : "border-danger") mb-3">
+            <div class="card-header text-white @(open ? "bg-success" : "bg-danger")">
+                <h4>We zijn momenteel @(open ? "open" : "gesloten")</h4>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    <div class="row">
+                        <div class="col-2">
+                            Ma:
+                        </div>
+                        <div class="col-4">
+                            8u00 - 20u00
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            Di:
+                        </div>
+                        <div class="col-4">
+                            8u00 - 20u00
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            Wo:
+                        </div>
+                        <div class="col-4">
+                            8u00 - 20u00
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            Do:
+                        </div>
+                        <div class="col-4">
+                            8u00 - 20u00
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            Vr:
+                        </div>
+                        <div class="col-4">
+                            8u00 - 20u00
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            Za:
+                        </div>
+                        <div class="col-4">
+                            10u00 - 22u00
+                        </div>
+                    </div>
+                    Zondag gesloten.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

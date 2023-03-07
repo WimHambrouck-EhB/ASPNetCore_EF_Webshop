@@ -1,0 +1,14 @@
+﻿.sitelogo {
+    background-image: url("../images/logo_transparant.png");
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #6C0000;
+    min-height: 13rem;
+    margin-bottom: 1rem;
+}
+@media (min-width: 768px) {
+    .sitelogo {
+        background-size: 38rem;
+    }
+}

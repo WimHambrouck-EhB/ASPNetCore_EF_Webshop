@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Contact";
+}
+<h2>@ViewData["Title"]</h2>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.Message
+    </div>
+}
+else
+{
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.Error
+        </div>
+    }
+
+    <form asp-action="Contact" class="form" method="post">
+        <div class="mb-3">
+            <label for="email" class="form-label">E-mail</label>
+            <input id="email" type="email" class="form-control" name="email" placeholder="name@example.com" />
+        </div>
+        <div class="mb-3">
+            <label for="naam" class="form-label">Naam</label>
+            <input id="naam" type="text" class="form-control" name="naam" placeholder="Your name here" />
+        </div>
+        <div class="mb-3">
+            <label for="inhoud" class="form-label">Bericht</label>
+            <textarea id="inhoud" name="inhoud" class="form-control" rows="8"></textarea>
+        </div>
+        <div class="mb-3">
+            <input value="Verzenden" type="submit" class="btn btn-primary" />
+            <input value="Annuleren" type="reset" class="btn btn-outline-secondary" />
+        </div>
+    </form>
+}
