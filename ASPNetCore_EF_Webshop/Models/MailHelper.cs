@@ -12,7 +12,7 @@ namespace Webshop.Models
         /// <param name="naam">Naam van de zender</param>
         /// <param name="inhoud">Inhoud van de email</param>
         /// <param name="ontvanger">E-mailadres van de ontvanger</param>
-        public static void SendMail(string zender, string naam, string inhoud, string ontvanger)
+        public static async Task SendMail(string zender, string naam, string inhoud, string ontvanger)
         {
             // twee keer "ontvanger", omdat Outlook niet toelaat een ander From adres te gebruiken dan de gebruiker van de account
             // (anders zou je de invuller van het formulier in het "From" veld kunnen steken)
@@ -26,7 +26,7 @@ namespace Webshop.Models
                 Credentials = new NetworkCredential(ontvanger, "wachtwoord"),
                 EnableSsl = true
             };
-            smtp.Send(mail);
+            await Task.Run(() => smtp.Send(mail) );
         }
     }
 }

@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Bestelling";
+}
+
+<h2>Bestelling</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Naam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Beschrijving)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categorie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aantal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prijs)
+            </th>
+            <th>
+                Totaal
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Naam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Beschrijving)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categorie)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aantal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prijs)
+                </td>
+                <td>
+                    @{
+                        var subtotaal = (item.Aantal * item.Prijs).ToString("C");
+                    }
+                    @subtotaal
+                </td>
+            </tr>
+        }
+        <tr class="active">
+            <td colspan="5"></td>
+            <td>@ViewBag.Totaal.ToString("C")</td>
+        </tr>
+    </tbody>
+</table>
+<form asp-action="Bestel">
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        <input type="hidden" name="producten[@i].Id" value="@Model.ElementAt(i).Id" />
+        <input type="hidden" name="producten[@i].Aantal" value="@Model.ElementAt(i).Aantal" />
+    }
+    <input type="submit" class="btn btn-success" value="Bestellen" />
+    <a asp-action="Producten" class="btn btn-light">Annuleren</a>
+</form>

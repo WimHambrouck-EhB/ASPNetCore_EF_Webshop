@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Webshop.Models
 {
@@ -10,5 +11,14 @@ namespace Webshop.Models
         public Categorie Categorie { get; set; }
         [DataType(DataType.Currency)]
         public decimal Prijs { get; set; }
+        [NotMapped]
+        public int Aantal { get; set; }
+
+        public override string ToString()
+        {
+            return $"Id={Id}, Naam={Naam}, Beschrijving={Beschrijving}, Categorie={Categorie}, Prijs={Prijs}, Aantal={Aantal}";
+        }
+
+
     }
 }

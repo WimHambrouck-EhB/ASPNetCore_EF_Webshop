@@ -1,17 +1,13 @@
-﻿@model IEnumerable<Product>
-
+﻿@model ProductenViewModel
 @{
     ViewData["Title"] = "Producten";
 }
+
 <h1>@ViewData["Title"]</h1>
 
 <form asp-controller="Home" asp-action="Producten" method="get" class="form-inline">
     <div class="input-group">
-
-        @* Op dit moment gaat de select bij het versturen van het formulier terug naar de default waarde ("Kies een categorie...").
-        Het is gebruiksvriendelijker om de huidig geselecteerde waarde te laten zien, hiervoor moet je een ViewModel gebruiken
-        om zowel de lijst producten als de huidige categorie door te geven aan deze View (zie oplossing volgend werkcollege). *@
-        <select name="Categorie" asp-items="Html.GetEnumSelectList<Categorie>()" class="form-select mb-2 mr-sm-2" onchange="this.form.submit()">
+        <select asp-for="Categorie" asp-items="Html.GetEnumSelectList<Categorie>()" class="form-select mb-2 mr-sm-2" onchange="this.form.submit()">
             <option selected="selected" value="">Kies een categorie...</option>
         </select>
         <input type="submit" value="Toon" class="btn btn-primary mb-2" />
@@ -20,7 +16,7 @@
 
 @if (Model != null)
 {
-    @if (!Model.Any())
+    @if (!Model.Producten.Any())
     {
         <div class="alert alert-warning">
             Geen producten in deze categorie...
@@ -28,37 +24,56 @@
     }
     else
     {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Naam)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Beschrijving)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Prijs)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+        Product displayModel = Model.Producten.First();
+
+        <form asp-action="Bestelling" method="post">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Naam)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Beschrijving)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Prijs)
-                        </td>
+                        <th>
+                            @Html.DisplayNameFor(model => displayModel.Naam)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => displayModel.Beschrijving)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => displayModel.Prijs)
+                        </th>
+                        <th>
+                            Aantal
+                        </th>
+                        <th></th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Producten.Count(); i++)
+                    {
+                        Product item = Model.Producten.ElementAt(i);
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Naam)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Beschrijving)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Prijs)
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <input id="producten[@i].Aantal" name="producten[@i].Aantal" value="0" class="form-control" />
+                                    <input type="hidden" name="producten[@i].Id" value="@Model.Producten.ElementAt(i).Id" />
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="form-group">
+                <input type="submit" value="Bestellen" class="btn btn-success" />
+                <input type="hidden" asp-for="Categorie" />
+            </div>
+        </form>
     }
 }
