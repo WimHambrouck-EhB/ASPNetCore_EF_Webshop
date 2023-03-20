@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using Webshop.Data;
 using Webshop.Models;
@@ -8,10 +10,12 @@ namespace ASPNetCore_Modeldata_Webshop.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly WebshopContext _webshopContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, WebshopContext webshopContext)
         {
             _logger = logger;
+            _webshopContext = webshopContext;
         }
 
         public IActionResult Index()
@@ -26,8 +30,8 @@ namespace ASPNetCore_Modeldata_Webshop.Controllers
                 return View();
             }
 
-            var productenFiltered = ProductData.Producten.Where(p => p.Categorie == categorie)
-                                                         .OrderBy(p => p.Naam);
+            var productenFiltered = _webshopContext.Products.Where(p => p.Categorie == categorie)
+                                                            .OrderBy(p => p.Naam);
             return View(productenFiltered);
         }
 
@@ -55,6 +59,7 @@ namespace ASPNetCore_Modeldata_Webshop.Controllers
 
             return View();
         }
+
         public IActionResult Contact()
         {
             return View();
